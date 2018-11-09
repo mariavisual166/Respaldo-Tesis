@@ -55,7 +55,7 @@ class File(Resource):
 api.add_resource(TeachersInsertInitial, '/docentes')
 api.add_resource(TeacherstUpdate, '/docentes/<date_update>')
 api.add_resource(File, '/upload')
-
+#api.add_resource(File, '/upload/<user>')
 if __name__ == '__main__':
    
     app.run(debug=True, port=int('8083'))
