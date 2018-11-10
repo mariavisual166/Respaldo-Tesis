@@ -5,12 +5,14 @@
       Seleccione un archivo csv
     </div>
     <p >Fecha tope de subida: 2-11-2018</p>
+    <div v-if="loading==true">
+      <Spinner style="display:block; margin:auto;"></Spinner>
+    </div>
     <div class="archivo normal rounded" id="archi">
-     <img src="https://image.flaticon.com/icons/svg/29/29102.svg"
 		  <label>Archivo
 		    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
 		  </label>
-		  <button class="btn btn-light" id="enviar"v-on:click="submitFile()">Enviar</button>
+		  <button class="btn btn-light" id="enviar" v-on:click="submitFile()">Enviar</button>
       
       </div>
       <div class="intru">
@@ -28,15 +30,20 @@
 
 <script>
 import axios from 'axios';
-
+import { mapState, mapGetters } from "vuex";
+import Spinner from '@/components/Spinner'
   export default {
     /*
       Defines the data used by the component
     */
     data(){
       return {
-        file: ''
+        file: '',
+        loading: false
       }
+    },
+    components:{
+      Spinner
     },
 
     methods: {
@@ -57,7 +64,8 @@ import axios from 'axios';
         /*
           Make the request to the POST /single-file URL
         */
-            const path = 'http://localhost:8083/upload';
+            const path = 'http://localhost:8083/upload/'+ this.user.username;
+            this.loading=true;
           
 
             axios.post(path,
@@ -68,8 +76,16 @@ import axios from 'axios';
                 }
                 
               }
-            ).then(function(res){
+            ).then(res => this.success(res))
+        .catch(res=> {
+        console.log(res);
+        console.log('FAILURE!!');
+        this.loading= false;
+        });
+      },
+      success(res){
             var div = document.getElementById("i");
+            this.loading= false;
 
            div.textContent  = res.data["exitosa"];
            if(res.data["exitosa"]== "El Archivo csv ha sido procesado con exito!!!"){
@@ -88,12 +104,7 @@ import axios from 'axios';
          
           console.log(res.data); 
           console.log('SUCCESS!!');
-        })
-        .catch(res=> {
-        console.log(res);
-        console.log('FAILURE!!');
-        });
-      },
+        },
 
       /*
         Handles a change on the file upload
@@ -101,6 +112,9 @@ import axios from 'axios';
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
       }
+    },
+    computed: {
+      ...mapGetters(["user"])
     }
   }
 </script>
@@ -122,10 +136,10 @@ import axios from 'axios';
          
         }
     .rojo{
-         border: 1px solid rgba(255,0,0,0.5);
+         background: rgba(255,0,0,0.19);
         }
     .verde{
-         border: 1px solid rgba(0,128,0,0.2);
+           background: rgba(0,128,0,0.2);
         }
     .normal{
            border: 1px solid rgba(155,155,155,0.1);

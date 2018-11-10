@@ -15,7 +15,7 @@ import types
 import psycopg2
 from microservices.Teachers import TeachersInsertInitial, TeacherstUpdate
 import requests
-UPLOAD_FOLDER = 'C:/Users\Mariangela Goncalves/Desktop/prueba/test-backend-apis-master'
+UPLOAD_FOLDER = 'C:/Users/wilke/Desktop/Mari 10112018/test-backend-apis-master'
 ALLOWED_EXTENSIONS = set(['csv'])
 app = Flask(__name__)
 api = Api(app)
@@ -31,19 +31,19 @@ class File(Resource):
     representations = {'application/json': make_response}
     parser = reqparse.RequestParser()
    
-    def post(self):
+    def post(self,user):
         file = request.files['file']
         if allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             NombreArchivo=file.filename
-            user="Facyt"
+            #user="Facyt"
             Error= leerArchivoDocentes(NombreArchivo,user)
             os.remove(NombreArchivo) 
             if(Error=="El Archivo csv ha sido procesado con exito!!!"):
-                #data1={"username":user,"action": "Carga de archivo", "module": "Docentes"}
-                #r=requests.post("",dhttp://localhost:8084/api/v1/historyactionata= json.dumps(data1) )
-                pass
+                data1={"username":user,"action": "Carga de archivo", "module": "Docentes"}
+                r=requests.post("http://localhost:8084/api/v1/historyaction", data= json.dumps(data1))
+                
             return json.dumps({'exitosa':Error}), 201, { 'Access-Control-Allow-Origin': '*' }
         else:
             # return error
@@ -54,8 +54,8 @@ class File(Resource):
 # docentes route
 api.add_resource(TeachersInsertInitial, '/docentes')
 api.add_resource(TeacherstUpdate, '/docentes/<date_update>')
-api.add_resource(File, '/upload')
-#api.add_resource(File, '/upload/<user>')
+#api.add_resource(File, '/upload')
+api.add_resource(File, '/upload/<user>')
 if __name__ == '__main__':
    
     app.run(debug=True, port=int('8083'))

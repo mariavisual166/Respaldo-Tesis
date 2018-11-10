@@ -29,10 +29,10 @@ def Mensaje(aux,ErrorColum):
     }
     if(ErrorColum==18):
         impr= "el usuario no tiene permisos de insertar datos de otra facultad"
-        impr= impr + "dato invalido en la Fila {} columna Facultad".format(aux)
+        impr= " "+ impr + "dato invalido en la Fila {} columna Facultad".format(aux)
     else:
         if(ErrorColum==19):
-            impr= "Error. el order de las columnas debe ser "
+            impr= "Error. el order de las columnas debe ser (ci,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,sexo,correo,Nacionalidad,Facultad,Tipo,AreaDeInvestigacion,titulo,Nivel,Otros_Estudios,Proyectos,Premios,Escalafon,Publicaciones)"
         else:
             impr= "dato invalido en la Fila {} columna {}".format(aux,switcher[ErrorColum])
          
@@ -44,8 +44,8 @@ def leerArchivoDocentes(NombreArchivo,user):
     PSQL_HOST = "localhost"
     PSQL_PORT = "5432"
     PSQL_USER = "postgres"
-    PSQL_PASS = "0000"
-    #PSQL_PASS = "123456"
+     #
+    PSQL_PASS = "123456"
     PSQL_DB   = "docente"
     connstr = "host=%s port=%s user=%s password=%s dbname=%s" % (PSQL_HOST, PSQL_PORT, PSQL_USER, PSQL_PASS, PSQL_DB)
     conn = psycopg2.connect(connstr)
@@ -184,7 +184,7 @@ def leerArchivoDocentes(NombreArchivo,user):
                             else:
                                 segundoA=reg['segundo_apellido']
                     # se inserta la infomacion del docente
-                            InsDocente = "  UPDATE Docente SET PirmerNombre='{}',SegundoNombre='{}',PirmerApellido='{}',SegundoApellido='{}',Sexo='{}',correo='{}',Nacionalidad='{}',Facultad='{}',Tipo='{}',AreaDeInvestigacion='{}',Escalafon='{}',FechaActualizacion='{}' WHERE Cedula='{}';".format(reg['primer_nombre'],segundo,reg['primer_apellido'],segundoA,reg['sexo'],reg['correo'],reg['Nacionalidad'],reg['Facultad'],reg['Tipo'],reg['AreaDeInvestigacion'],reg['Escalafon'],time.strftime('%Y-%m-%d'),reg['ci'])
+                            InsDocente = "  UPDATE Docente SET primernombre='{}',SegundoNombre='{}',primerapellido='{}',SegundoApellido='{}',Sexo='{}',correo='{}',Nacionalidad='{}',Facultad='{}',Tipo='{}',AreaDeInvestigacion='{}',Escalafon='{}',FechaActualizacion='{}' WHERE Cedula='{}';".format(reg['primer_nombre'],segundo,reg['primer_apellido'],segundoA,reg['sexo'],reg['correo'],reg['Nacionalidad'],reg['Facultad'],reg['Tipo'],reg['AreaDeInvestigacion'],reg['Escalafon'],time.strftime('%Y-%m-%d %H:%M:%S'),reg['ci'])
                             cur.execute(InsDocente)
                             actualizarPublicacion(reg,ListaPublicacionSistema)
                             MensajeError+MensajeError+actualizarTitulo(reg,cont,ListatitulosSistema)
@@ -211,7 +211,7 @@ def leerArchivoDocentes(NombreArchivo,user):
                         else:
                             segundoA=reg['segundo_apellido']
                         # se inserta la infomacion del docente
-                        InsDocente = "INSERT INTO Docente(Cedula,PirmerNombre,SegundoNombre,PirmerApellido,SegundoApellido,Sexo,correo,Nacionalidad,Facultad,Tipo,AreaDeInvestigacion,Escalafon,FechaActualizacion) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}' );".format(reg['ci'],reg['primer_nombre'],segundo,reg['primer_apellido'],segundoA,reg['sexo'],reg['correo'],reg['Nacionalidad'],reg['Facultad'],reg['Tipo'],reg['AreaDeInvestigacion'],reg['Escalafon'],time.strftime('%Y-%m-%d'))
+                        InsDocente = "INSERT INTO Docente(Cedula,primernombre,SegundoNombre,primerapellido,SegundoApellido,Sexo,correo,Nacionalidad,Facultad,Tipo,AreaDeInvestigacion,Escalafon,FechaActualizacion) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}' );".format(reg['ci'],reg['primer_nombre'],segundo,reg['primer_apellido'],segundoA,reg['sexo'],reg['correo'],reg['Nacionalidad'],reg['Facultad'],reg['Tipo'],reg['AreaDeInvestigacion'],reg['Escalafon'],time.strftime('%Y-%m-%d %H:%M:%S'))
                         cur.execute(InsDocente)
                         #se obtine el ultimo id de titulo
                         ObtId = "SELECT id FROM titulo WHERE id=(SELECT MAX(id) from titulo);"
@@ -232,7 +232,7 @@ def leerArchivoDocentes(NombreArchivo,user):
 
                                 else:
                                     UltimoId=(UltimoId)+1
-                                    sqlquery3 = "INSERT INTO titulo(id,nomtitulo,Nivel,FechaActualizacion) VALUES ('{}','{}','{}','{}' );".format(UltimoId,CadenaTitulo[i],CadenaNivel[i],time.strftime('%Y-%m-%d'))
+                                    sqlquery3 = "INSERT INTO titulo(id,nomtitulo,Nivel,FechaActualizacion) VALUES ('{}','{}','{}','{}' );".format(UltimoId,CadenaTitulo[i],CadenaNivel[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                                     cur.execute(sqlquery3)
                                     sqlquery3 = "INSERT INTO DocenteTieneTitulo(CedulaPersona,IdTitulo) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                                     cur.execute(sqlquery3)
@@ -259,7 +259,7 @@ def leerArchivoDocentes(NombreArchivo,user):
                                 cur.execute(sqlquery3)
                             else:
                                 UltimoId=(UltimoId)+1
-                                sqlquery4 = "INSERT INTO OtroEstudio(id,nomtitulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena2[i],time.strftime('%Y-%m-%d'))
+                                sqlquery4 = "INSERT INTO OtroEstudio(id,nomtitulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena2[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                                 cur.execute(sqlquery4)
                                 sqlquery3 = "INSERT INTO DocenteRealizaOtroEstudio(CedulaPersona,IdOtroEstudio) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                                 cur.execute(sqlquery3)
@@ -282,7 +282,7 @@ def leerArchivoDocentes(NombreArchivo,user):
                                 cur.execute(sqlquery3)
                             else:
                                 UltimoId=(UltimoId)+1
-                                sqlquery5 = "INSERT INTO Proyecto(id,titulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena3[i],time.strftime('%Y-%m-%d'))
+                                sqlquery5 = "INSERT INTO Proyecto(id,titulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena3[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                                 cur.execute(sqlquery5)
                                 sqlquery3 = "INSERT INTO DocenteParticipaProyecto(CedulaPersona,IdProyecto) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                                 cur.execute(sqlquery3)
@@ -306,7 +306,7 @@ def leerArchivoDocentes(NombreArchivo,user):
                                 cur.execute(sqlquery3)
                             else:
                                 UltimoId=(UltimoId)+1
-                                sqlquery6 = "INSERT INTO Premio(id,Nombre,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena4[i],time.strftime('%Y-%m-%d'))
+                                sqlquery6 = "INSERT INTO Premio(id,Nombre,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena4[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                                 cur.execute(sqlquery6)
                                 sqlquery3 = "INSERT INTO DocenteTienePremio(CedulaPersona,IdPremio) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                                 cur.execute(sqlquery3)
@@ -329,7 +329,7 @@ def leerArchivoDocentes(NombreArchivo,user):
                                 cur.execute(sqlquery3)
                             else:
                                 UltimoId=(UltimoId)+1
-                                sqlquery6 = "INSERT INTO Publicacion(Id,TituloPublicacion,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena5[i],time.strftime('%Y-%m-%d'))
+                                sqlquery6 = "INSERT INTO Publicacion(Id,TituloPublicacion,FechaActualizacion,UrlCitacion,UrlPublicacion,NumeroCitaciones) VALUES ('{}','{}','{}','{}','{}',{});".format(UltimoId,cadena5[i],time.strftime('%Y-%m-%d %H:%M:%S'),"no tiene link","no tiene link",0)
                                 cur.execute(sqlquery6)
                                 sqlquery3 = "INSERT INTO DocenteTienePublicacion(CedulaPersona,IdPublicacion) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                                 cur.execute(sqlquery3)
@@ -353,7 +353,7 @@ def leerArchivoDocentes(NombreArchivo,user):
     else:
         conn.rollback()
         if(FilaInvalida == -1 ):
-            return "Error al procesar el archivo debido a que faltan columnas en el archivo de entrada o no cumple con el orden de columnas"
+            return "Error al procesar el archivo debido a que faltan columnas en el archivo de entrada o no cumple con el orden de columnas (ci,primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,sexo,correo,Nacionalidad,Facultad,Tipo,AreaDeInvestigacion, titulo,Nivel,Otros_Estudios,Proyectos,Premios,Escalafon,Publicaciones)"
         else:
             return MensajeError
         
@@ -362,8 +362,8 @@ def actualizarTitulo(reg,cont,ListatitulosSistema):
     PSQL_HOST = "localhost"
     PSQL_PORT = "5432"
     PSQL_USER = "postgres"
-    PSQL_PASS = "0000"
-    #PSQL_PASS = "123456"
+    
+    PSQL_PASS = "123456"
     PSQL_DB   = "docente"
     connstr = "host=%s port=%s user=%s password=%s dbname=%s" % (PSQL_HOST, PSQL_PORT, PSQL_USER, PSQL_PASS, PSQL_DB)
     conn = psycopg2.connect(connstr)
@@ -398,7 +398,7 @@ def actualizarTitulo(reg,cont,ListatitulosSistema):
 
                 else:
                     UltimoId=(UltimoId)+1
-                    sqlquery3 = "INSERT INTO titulo(id,nomtitulo,Nivel,FechaActualizacion) VALUES ('{}','{}','{}','{}' );".format(UltimoId,CadenaTitulo[i],CadenaNivel[i],time.strftime('%Y-%m-%d'))
+                    sqlquery3 = "INSERT INTO titulo(id,nomtitulo,Nivel,FechaActualizacion) VALUES ('{}','{}','{}','{}' );".format(UltimoId,CadenaTitulo[i],CadenaNivel[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                     cur.execute(sqlquery3)
                     sqlquery3 = "INSERT INTO DocenteTieneTitulo(CedulaPersona,IdTitulo) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                     cur.execute(sqlquery3)
@@ -417,8 +417,8 @@ def actualizarPublicacion(reg,ListaPublicacionSistema):
     PSQL_HOST = "localhost"
     PSQL_PORT = "5432"
     PSQL_USER = "postgres"
-    PSQL_PASS = "0000"
-    #PSQL_PASS = "123456"
+    
+    PSQL_PASS = "123456"
     PSQL_DB   = "docente"
     connstr = "host=%s port=%s user=%s password=%s dbname=%s" % (PSQL_HOST, PSQL_PORT, PSQL_USER, PSQL_PASS, PSQL_DB)
     conn = psycopg2.connect(connstr)
@@ -451,7 +451,7 @@ def actualizarPublicacion(reg,ListaPublicacionSistema):
                 cur.execute(sqlquery3)
             else:
                 UltimoId=(UltimoId)+1
-                sqlquery6 = "INSERT INTO Publicacion(Id,TituloPublicacion,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena5[i],time.strftime('%Y-%m-%d'))
+                sqlquery6 = "INSERT INTO Publicacion(Id,TituloPublicacion,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena5[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                 cur.execute(sqlquery6)
                 sqlquery3 = "INSERT INTO DocenteTienePublicacion(CedulaPersona,IdPublicacion) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                 cur.execute(sqlquery3)
@@ -467,8 +467,8 @@ def actualizarProyectos(reg,ListaProyectosSistema):
     PSQL_HOST = "localhost"
     PSQL_PORT = "5432"
     PSQL_USER = "postgres"
-    PSQL_PASS = "0000"
-    #PSQL_PASS = "123456"
+    
+    PSQL_PASS = "123456"
     PSQL_DB   = "docente"
     connstr = "host=%s port=%s user=%s password=%s dbname=%s" % (PSQL_HOST, PSQL_PORT, PSQL_USER, PSQL_PASS, PSQL_DB)
     conn = psycopg2.connect(connstr)
@@ -504,7 +504,7 @@ def actualizarProyectos(reg,ListaProyectosSistema):
                 cur.execute(sqlquery3)
             else:
                 UltimoId=(UltimoId)+1
-                sqlquery5 = "INSERT INTO Proyecto(id,titulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena3[i],time.strftime('%Y-%m-%d'))
+                sqlquery5 = "INSERT INTO Proyecto(id,titulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena3[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                 cur.execute(sqlquery5)
                 sqlquery3 = "INSERT INTO DocenteParticipaProyecto(CedulaPersona,IdProyecto) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                 cur.execute(sqlquery3)
@@ -519,8 +519,8 @@ def actualizarPremios(reg,ListaPremiosSistema):
     PSQL_HOST = "localhost"
     PSQL_PORT = "5432"
     PSQL_USER = "postgres"
-    PSQL_PASS = "0000"
-    #PSQL_PASS = "123456"
+    
+    PSQL_PASS = "123456"
     PSQL_DB   = "docente"
     connstr = "host=%s port=%s user=%s password=%s dbname=%s" % (PSQL_HOST, PSQL_PORT, PSQL_USER, PSQL_PASS, PSQL_DB)
     conn = psycopg2.connect(connstr)
@@ -553,7 +553,7 @@ def actualizarPremios(reg,ListaPremiosSistema):
                 cur.execute(sqlquery3)
             else:
                 UltimoId=(UltimoId)+1
-                sqlquery6 = "INSERT INTO Premio(id,Nombre,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena4[i],time.strftime('%Y-%m-%d'))
+                sqlquery6 = "INSERT INTO Premio(id,Nombre,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena4[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                 cur.execute(sqlquery6)
                 sqlquery3 = "INSERT INTO DocenteTienePremio(CedulaPersona,IdPremio) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                 cur.execute(sqlquery3)
@@ -566,8 +566,8 @@ def actualizarOtros(reg,ListaOtroEstudioSistema):
     PSQL_HOST = "localhost"
     PSQL_PORT = "5432"
     PSQL_USER = "postgres"
-    PSQL_PASS = "0000"
-    #PSQL_PASS = "123456"
+    
+    PSQL_PASS = "123456"
     PSQL_DB   = "docente"
     connstr = "host=%s port=%s user=%s password=%s dbname=%s" % (PSQL_HOST, PSQL_PORT, PSQL_USER, PSQL_PASS, PSQL_DB)
     conn = psycopg2.connect(connstr)
@@ -600,7 +600,7 @@ def actualizarOtros(reg,ListaOtroEstudioSistema):
                 cur.execute(sqlquery3)
             else:
                 UltimoId=(UltimoId)+1
-                sqlquery4 = "INSERT INTO OtroEstudio(id,nomtitulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena2[i],time.strftime('%Y-%m-%d'))
+                sqlquery4 = "INSERT INTO OtroEstudio(id,nomtitulo,FechaActualizacion) VALUES ('{}','{}','{}');".format(UltimoId,cadena2[i],time.strftime('%Y-%m-%d %H:%M:%S'))
                 cur.execute(sqlquery4)
                 sqlquery3 = "INSERT INTO DocenteRealizaOtroEstudio(CedulaPersona,IdOtroEstudio) VALUES ('{}','{}' );".format(reg['ci'],UltimoId)
                 cur.execute(sqlquery3)
@@ -628,6 +628,8 @@ def vefificarFacultad(user, reg):
                 else:
                     if(user=='Odontologia' and reg['Facultad'] !='Odontologia' ):
                         logico=False
+    if(user=='vicerrector'):
+        logico=True
     return logico
 
 def validadOrdenColum(fieldnames):
