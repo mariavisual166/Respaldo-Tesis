@@ -76,3 +76,17 @@ CREATE TABLE DocenteParticipaProyecto(
 	CedulaPersona int,
 	IdProyecto int,
 		PRIMARY KEY (CedulaPersona,IdProyecto));
+
+CREATE TABLE FechaTope(
+	Facultad varchar(50) ,
+	Fecha timestamp,
+		PRIMARY KEY (Facultad));
+
+
+INSERT INTO FechaTope(Facultad) VALUES ('Facyt');
+INSERT INTO FechaTope(Facultad) VALUES ('Faces');
+INSERT INTO FechaTope(Facultad) VALUES ('Face');
+INSERT INTO FechaTope(Facultad) VALUES ('Odontologia');
+INSERT INTO FechaTope(Facultad) VALUES ('Fcjp');
+INSERT INTO FechaTope(Facultad) VALUES ('Ingieneria');
+INSERT INTO FechaTope(Facultad) VALUES ('Derecho');
