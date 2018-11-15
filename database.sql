@@ -81,12 +81,23 @@ CREATE TABLE FechaTope(
 	Facultad varchar(50) ,
 	Fecha timestamp,
 		PRIMARY KEY (Facultad));
+CREATE TABLE CorreoEnviado(
+	Facultad varchar(50) ,
+	Logico varchar(50),
+		PRIMARY KEY (Facultad));
 
+INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Facyt','2210-10-01 00:00:00');
+INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Faces','2210-10-01 00:00:00');
+INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Face','2210-10-01 00:00:00');
+INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Odontologia','2210-10-01 00:00:00');
+INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Fcjp','2210-10-01 00:00:00');
+INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Ingieneria','2210-10-01 00:00:00');
+INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Fcs','2210-10-01 00:00:00');
 
-INSERT INTO FechaTope(Facultad) VALUES ('Facyt');
-INSERT INTO FechaTope(Facultad) VALUES ('Faces');
-INSERT INTO FechaTope(Facultad) VALUES ('Face');
-INSERT INTO FechaTope(Facultad) VALUES ('Odontologia');
-INSERT INTO FechaTope(Facultad) VALUES ('Fcjp');
-INSERT INTO FechaTope(Facultad) VALUES ('Ingieneria');
-INSERT INTO FechaTope(Facultad) VALUES ('Derecho');
+INSERT INTO CorreoEnviado(Facultad) VALUES ('Facyt');
+INSERT INTO CorreoEnviado(Facultad) VALUES ('Faces');
+INSERT INTO CorreoEnviado(Facultad) VALUES ('Face');
+INSERT INTO CorreoEnviado(Facultad) VALUES ('Odontologia');
+INSERT INTO CorreoEnviado(Facultad) VALUES ('Fcjp');
+INSERT INTO CorreoEnviado(Facultad) VALUES ('Ingieneria');
+INSERT INTO CorreoEnviado(Facultad) VALUES ('Fcs');
