@@ -17,7 +17,9 @@
       Carga de documentos con los datos docentes de la UC
       </div>
     </div>
-        
+    <div v-if="loading==true">
+      <Spinner style="display:block; margin:auto;"></Spinner>
+    </div>
         <div class="row">
           <div class="col-xl-8 col-md-8 col-sm-12">
             <div class="archivo normal rounded" id="archi">
@@ -102,10 +104,6 @@
                   </form>
   </div>
 </div>
-
-</template>
-
-<script>
 $(document).ready(function(){
     $("#LinkFecha").click(function(){
      $( "#LinkArchivo" ).removeClass( "active" )
@@ -122,8 +120,11 @@ $(document).ready(function(){
     
     });
 });
-import axios from 'axios';
 
+<script>
+import axios from 'axios';
+import { mapState, mapGetters } from "vuex";
+import Spinner from '@/components/Spinner'
   export default {
     /*
       Defines the data used by the component
@@ -132,7 +133,11 @@ import axios from 'axios';
       return {
         file: '',
         fecha: '2010-01-01',
+        loading: false
       }
+    },
+    components:{
+      Spinner
     },
 
     methods: {
@@ -191,8 +196,8 @@ import axios from 'axios';
         /*
           Make the request to the POST /single-file URL
         */
-                    
-            const path = 'http://localhost:8083/upload/'+'Facyt_docente';
+            const path = 'http://localhost:8083/upload/'+ this.user.username;
+            this.loading=true;
           
 
             axios.post(path,
@@ -203,8 +208,16 @@ import axios from 'axios';
                 }
                 
               }
-            ).then(function(res){
+            ).then(res => this.success(res))
+        .catch(res=> {
+        console.log(res);
+        console.log('FAILURE!!');
+        this.loading= false;
+        });
+      },
+      success(res){
             var div = document.getElementById("i");
+            this.loading= false;
 
            div.textContent  = res.data["exitosa"];
            if(res.data["exitosa"]== "El Archivo csv ha sido procesado con exito!!!"){
@@ -223,12 +236,7 @@ import axios from 'axios';
          
           console.log(res.data); 
           console.log('SUCCESS!!');
-        })
-        .catch(res=> {
-        console.log(res);
-        console.log('FAILURE!!');
-        });
-      },
+        },
 
       /*
         Handles a change on the file upload
@@ -236,9 +244,13 @@ import axios from 'axios';
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
       }
+    },
+    computed: {
+      ...mapGetters(["user"])
     }
   }
 </script>
+
 
 <style type="text/css">
   .archivo{
