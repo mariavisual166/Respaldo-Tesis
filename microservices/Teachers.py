@@ -17,7 +17,7 @@ class TeachersInsertInitial(BD, Resource):
     PSQL_PORT = "5432"
     PSQL_USER = "postgres"
    
-    PSQL_PASS = "123456"
+    PSQL_PASS = "0000"
     PSQL_DB   = "docente"
     connstr = "host=%s port=%s user=%s password=%s dbname=%s" % (PSQL_HOST, PSQL_PORT, PSQL_USER, PSQL_PASS, PSQL_DB)
     conn = psycopg2.connect(connstr)

@@ -1,14 +1,14 @@
 <template>
 
-<div class="container">
+<div class="container marge">
    <div  class="row" id="submenu">
       <div class="col">
         <div class="nav nav-item nav-pills text-center fondo"   role="tablist" aria-orientation="vertical">
-          <a class="nav-link active" id="LinkArchivo" @click="cambiar2()"href="#" >CARGA DE ARCHIVO</a>
-          <a class="nav-link" id="LinkFecha"   @click="cambiar()" href="#" >FECHAS TOPES</a>
+          <a class="nav-link active" id="LinkArchivo" href="#" >CARGA DE ARCHIVO</a>
+          <a class="nav-link" id="LinkFecha" href="#" >FECHAS TOPES</a>
         </div>
       </div>
-    </div
+    </div>
   <h3></h3>
   <div id="carga" >
   <h2>Docentes</h2>
@@ -33,7 +33,6 @@
                <h4 >Pasos a seguir</h4>
                 <p >1-haga click en el boton seleccionar archivo.</p>
                 <p >2-seleccione el archivo csv que desea ingresar en el sistema.</p>
-                 <button class="btn btn-light" id="centar" @click="Ver()" >Ver ejemplo archivo </button>
                 <p >3-Presione el boton de enviar.</p>
                 <p >4-En caso que ocurra  un error , modifique el archivo y vuelva a intentarlo.</p>
               </div>
@@ -102,23 +101,36 @@
                       </div>
                   </form>
   </div>
-  <div id="Ver">
-    <h2>Ejemplo</h2>
-    <div id="imagen" class="zoom"><img src="/static/Screenshot_1.png" ></div>
-     <button class="btn btn-light" id="centar" @click="Regresar()" >Regresar </button>
-
   </div>
 </div>
-
+</div>
 
 </template>
 
 <script>
 
 
+$(document).ready(function(){          
+    $("#LinkFecha").click(function(){
 
+     $( "#LinkArchivo" ).removeClass( "active" )
+      $( "#LinkFecha" ).addClass( "active" )
+      $("#carga").css("display", "none");
+      $("#fecha").css("display", "block");
+       
+    });
+     $("#LinkArchivo").click(function(){
+     $( "#LinkFecha" ).removeClass( "active" )
+      $( "#LinkArchivo" ).addClass( "active" )
+      $("#fecha").css("display", "none");
+      $("#carga").css("display", "block");
+     
+    
+    });
+});
 import axios from 'axios';
-
+import { mapState, mapGetters } from "vuex";
+import Spinner from '@/components/Spinner'
   export default {
     /*
       Defines the data used by the component
@@ -127,14 +139,17 @@ import axios from 'axios';
       return {
         file: '',
         fecha: '2010-01-01',
+        loading: false
       }
+    },
+    components:{
+      Spinner
     },
 
     methods: {
       /*
         Submits the file to the server
-      */
-      submitFile2()
+      */ submitFile2()
       {
           var Facesfecha=$(fechaFaces).val()
           var Facytfecha=$(fechaFacyt).val()
@@ -186,8 +201,8 @@ import axios from 'axios';
         /*
           Make the request to the POST /single-file URL
         */
-                    
-            const path = 'http://localhost:8083/upload/'+'Facyt_docente';
+            const path = 'http://localhost:8083/upload/'+ this.user.username;
+            this.loading=true;
           
 
             axios.post(path,
@@ -198,8 +213,16 @@ import axios from 'axios';
                 }
                 
               }
-            ).then(function(res){
+            ).then(res => this.success(res))
+        .catch(res=> {
+        console.log(res);
+        console.log('FAILURE!!');
+        this.loading= false;
+        });
+      },
+      success(res){
             var div = document.getElementById("i");
+            this.loading= false;
 
            div.textContent  = res.data["exitosa"];
            if(res.data["exitosa"]== "El Archivo csv ha sido procesado con exito!!!"){
@@ -218,54 +241,23 @@ import axios from 'axios';
          
           console.log(res.data); 
           console.log('SUCCESS!!');
-        })
-        .catch(res=> {
-        console.log(res);
-        console.log('FAILURE!!');
-        });
-      }, cambiar()
-      {
-      $( "#LinkArchivo" ).removeClass( "active" )
-      $( "#LinkFecha" ).addClass( "active" )
-      $("#carga").css("display", "none");
-      $("#fecha").css("display", "block");
-        console.log("HOLA");
-      },
-      Ver() {
-      $("#submenu").css("display", "none");
-      $("#fecha").css("display", "none");
-      $("#carga").css("display", "none");
-      $("#Ver").css("display", "block");
-  
-      },
-      cambiar2()
-      {
-      $( "#LinkFecha" ).removeClass( "active" )
-      $( "#LinkArchivo" ).addClass( "active" )
-      $("#fecha").css("display", "none");
-      $("#carga").css("display", "block");
-      },
-      Regresar()
-      {
-      $("#submenu").css("display", "block");
-      $("#Ver").css("display", "none");
-      $("#carga").css("display", "block");
-      },
+        },
+
       /*
         Handles a change on the file upload
       */
       handleFileUpload(){
         this.file = this.$refs.file.files[0];
       }
+    },
+    computed: {
+      ...mapGetters(["user"])
     }
   }
 </script>
 
+
 <style type="text/css">
-#centar{
-          display:block;margin:auto;
-           margin-bottom:20px; margin-top:20px;
-        }
   .archivo{
           
           background: rgba(155,155,155,0.3);
@@ -288,7 +280,7 @@ import axios from 'axios';
            border: 1px solid rgba(155,155,155,0.1);
          
         } 
-      #fecha,#Ver{
+      #fecha{
            display:none;
          
         }
@@ -326,10 +318,11 @@ import axios from 'axios';
          margin-top:10px;
         margin-bottom:10px;
         }
-        #imagen img{
-             width:110%;
-              margin-left:-90px;
-        
+
+        .marge {
+       
+         margin-top:8%;
+       
         }
 @media (max-width: 1000px) { 
 
@@ -382,22 +375,6 @@ import axios from 'axios';
           margin:auto;
        
         }
-
-    <style>
-.zoom {
-    padding: 50px;
-    
-    transition: transform .2s; /* Animation */
-    width: 200px;
-    height: 200px;
-   
-}
-
-.zoom:hover {
-    transform: scale(1.3); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-    margin-left:100px;
-     margin-bottom:80px;
-}
-</style>    
 </style>
+
 

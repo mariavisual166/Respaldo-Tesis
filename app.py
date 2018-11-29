@@ -3,6 +3,8 @@
 from flask import Flask, make_response, request
 from microservices.scholar import main
 from resources.ProcesarArchivoDocente import leerArchivoDocentes,Mensaje
+from resources.ModificarFecha import CambiarFechaTope
+#from resources.EnviarCorreo import enviar
 from flask_cors import CORS
 from flask_restful import Api
 import os
@@ -15,7 +17,8 @@ import types
 import psycopg2
 from microservices.Teachers import TeachersInsertInitial, TeacherstUpdate
 import requests
-UPLOAD_FOLDER = 'C:/Users/wilke/Desktop/Mari 10112018/test-backend-apis-master'
+#UPLOAD_FOLDER = 'C:/Users/wilke/Desktop/Mari 10112018/test-backend-apis-master'
+UPLOAD_FOLDER = os.getcwd() 
 ALLOWED_EXTENSIONS = set(['csv'])
 app = Flask(__name__)
 api = Api(app)
@@ -37,12 +40,13 @@ class File(Resource):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             NombreArchivo=file.filename
-            #user="Facyt"
-            Error= leerArchivoDocentes(NombreArchivo,user)
+            User=user
+            Error= leerArchivoDocentes(NombreArchivo,User)
             os.remove(NombreArchivo) 
             if(Error=="El Archivo csv ha sido procesado con exito!!!"):
-                data1={"username":user,"action": "Carga de archivo", "module": "Docentes"}
-                r=requests.post("http://localhost:8084/api/v1/historyaction", data= json.dumps(data1))
+                #data1={"username":user,"action": "Carga de archivo", "module": "Docentes"}
+                #r=requests.post("http://localhost:8084/api/v1/historyaction", data= json.dumps(data1))
+                pass
                 
             return json.dumps({'exitosa':Error}), 201, { 'Access-Control-Allow-Origin': '*' }
         else:
@@ -50,12 +54,25 @@ class File(Resource):
             return json.dumps({'exitosa':'Error !!!. El formato del archivo ingresado no es csv'}), 201, { 'Access-Control-Allow-Origin': '*' }
 
 
-
+class fecha(Resource):
+    representations = {'application/json': make_response}
+    parser = reqparse.RequestParser()
+    def post(self,faces,facyt,face,odontologia,fcjp,ingieneria,derecho):
+        CambiarFechaTope(faces,facyt,face,odontologia,fcjp,ingieneria,derecho)
+        Error="Las fechas topes han sido modificadas con exito !!!"
+        return json.dumps({'exitosa':Error}), 201, { 'Access-Control-Allow-Origin': '*' }
+    
+        
 # docentes route
 api.add_resource(TeachersInsertInitial, '/docentes')
 api.add_resource(TeacherstUpdate, '/docentes/<date_update>')
 #api.add_resource(File, '/upload')
 api.add_resource(File, '/upload/<user>')
+#api.add_resource(fecha, '/fechas/<string:faces>')
+api.add_resource(fecha, '/fechas/<string:faces>/<string:facyt>/<string:face>/<string:odontologia>/<string:fcjp>/<string:ingieneria>/<string:derecho>')
+#api.add_resource(fecha, '/fechas')
+
+
 if __name__ == '__main__':
    
     app.run(debug=True, port=int('8083'))
