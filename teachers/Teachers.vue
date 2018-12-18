@@ -23,9 +23,9 @@
             <div class="archivo normal rounded" id="archi">
               <h5>Archivo</h5>
               <label>
-                <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                <input type="file" id="file" ref="file"   @click="CambiarBoton()" v-on:change="handleFileUpload()"/>
               </label>
-              <button class="btn btn-light" id="enviar"v-on:click="submitFile()">Enviar</button>
+              <button class="btn btn-light" id="enviar"  v-on:click="submitFile()">Procesar</button>
             </div>
           </div>
           <div class="col-xl-4 col-md-4 col-sm-0">
@@ -44,61 +44,84 @@
       <div id= "e" class="alert alert-secondary" role="alert">
       </div>
     </div>
-                  <form class="col s12 margen">
-                      
-                      
-                      <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Faces</label>
-                        <div class="col-md-6">
+  <div class="row">
+    <div class="col-xl-3 col-md-3 col-sm-0">
+ 
+    </div>
+    <div class="col-xl-6 col-md-6 col-sm-0 ">
+      <form class="">
+      <div class="form-group row">
+                        <label for="first_name" class="col-sm-1 col-form-label">Faces</label>
+                        <div class="col-md-12">
                           <input type="date"  id="fechaFaces" value="2010-10-01"  class="form-control" >
                         </div>
                       </div>
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Facyt</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-1 col-form-label ">Facyt</label>
+                        <div class="col-md-12">
                           <input type="date" id="fechaFacyt" value="2010-10-01" class="form-control" >
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Face</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-1 col-form-label text-md-right">Face</label>
+                        <div class="col-md-12">
                           <input type="date" id="fechaFace" value="2010-10-01" class="form-control" >
                         </div>
                       </div>
                     
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Derecho</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-1 col-form-label text-md-right">Fcs</label>
+                        <div class="col-md-12">
                           <input type="date"  id="fechaDerecho" value="2010-10-01" class="form-control" >
                         </div>
                       </div>
-                    
+                        <div class="form-group row">
+                        <label for="first_name" class="col-sm-1 col-form-label ">Fcjp</label>
+                        <div class="col-md-12">
+                          <input type="date" id="fechaFcjp" value="2010-10-01" class="form-control" >
+                        </div>
+                      </div>
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida odontologia</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-5 col-form-label text-md-left">Facultad de odontologia</label>
+                        <div class="col-md-12">
                           <input type="date"  id="fechaOdontologia" value="2010-10-01"  class="form-control" >
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Ingieneria</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-5 col-form-label text-md-left">Facultad de  Ingieneria</label>
+                        <div class="col-md-12">
                           <input type="date"  id="fechaIngieneria" value="2010-10-01" class="form-control" >
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Fcjp</label>
-                        <div class="col-md-6">
-                          <input type="date" id="fechaFcjp" value="2010-10-01" class="form-control" >
-                        </div>
-                      </div>
-                    
-                  
-                      <div class="form-group" id="boton">
-                          
-                          <button class="btn btn-primary" @click="submitFile2()"  type="submit">Guardar</button>
-                      </div>
-                  </form>
+      </form>
+       <button class="btn btn-primary" id="centar2"  @click="submitFile2()"  >Guardar</button>
+    </div>
+        <div class="col-xl-3 col-md-3 col-sm-0 ">
+ 
+    </div>
   </div>
+                  
+  </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        El archivo a sido procesado con exito..
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
   <div id="Ver">
     <h2>Ejemplo</h2>
     <div id="imagen" class="zoom"><img src="/static/Screenshot_1.png" ></div>
@@ -106,59 +129,73 @@
 
   </div>
   <div id="UltimaFecha">
-    <h2>Ejemplo</h2>
-  <form class="col s12 margen">
-                      
-                      
-                      <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Faces</label>
-                        <div class="col-md-6">
+    <h2>Últimas fechas de actualización </h2>
+<div class="row">
+    <div class="col-xl-3 col-md-3 col-sm-0">
+ 
+    </div>
+    <div class="col-xl-6 col-md-6 col-sm-0 ">
+      <form class="margen">
+     <div class="form-group row">
+                        <label for="first_name" class="col-sm-1 col-form-label text-md-right"> Faces</label>
+                        <div class="col-md-12">
                           <input type="text"  id="fechaAFaces" value="2010-10-01" disabled class="form-control" >
                         </div>
                       </div>
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Facyt</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-1 col-form-label "> Facyt</label>
+                        <div class="col-md-12">
                           <input type="text" id="fechaAFacyt" value="2010-10-01" disabled class="form-control" >
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Face</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-1 col-form-label text-md-right">Face&nbsp</label>
+                        <div class="col-md-12">
                           <input type="text" id="fechaAFace" value="2010-10-01" disabled class="form-control" >
                         </div>
                       </div>
                     
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Fcs</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-1 col-form-label text-md-right">Fcs&nbsp&nbsp</label>
+                        <div class="col-md-12">
                           <input type="text"  id="fechaADerecho" value="2010-10-01" disabled class="form-control" >
                         </div>
                       </div>
-                    
                     <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Facultad de Odontologia</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-1 col-form-label text-md-right">Fcjp</label>
+                        <div class="col-md-12">
+                          <input type="text" id="fechaAFcjp" value="2010-10-01" disabled class="form-control" >
+                        </div>
+                      </div>
+                    <div class="form-group row">
+                        <label for="first_name" class="col-sm-5 col-form-label text-md-left"> Facultad de Odontologia</label>
+                        <div class="col-md-12">
                           <input type="text"  id="fechaAOdontologia" value="2010-10-01" disabled class="form-control" >
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Ingieneria</label>
-                        <div class="col-md-6">
+                        <label for="first_name" class="col-sm-5 col-form-label text-md-left">Facultad de Ingieneria &nbsp&nbsp</label>
+                        <div class="col-md-12">
                           <input type="text"  id="fechaAIngieneria" value="2010-10-01" disabled class="form-control" >
                         </div>
                       </div>
+                      
                       <div class="form-group row">
-                        <label for="first_name" class="col-sm-4 col-form-label text-md-right">Fecha tope de subida Fcjp</label>
-                        <div class="col-md-6">
-                          <input type="text" id="fechaAFcjp" value="2010-10-01" disabled class="form-control" >
+                        <label for="first_name" class="col-sm-4 col-form-label text-md-left">Citaciones&nbsp&nbsp</label>
+                        <div class="col-md-12">
+                          <input type="text" id="API" value="2010-10-01" disabled class="form-control" >
                         </div>
                       </div>
-                    
-                      
-                  </form>
+             
      <button class="btn btn-light" id="centar" @click="Regresar()" >Regresar </button>
-
+      </form>
+     
+    </div>
+    <div class="col-xl-3 col-md-3 col-sm-0 ">
+ 
+    </div>
+  </div>
+  
   </div>
 </div>
 
@@ -254,71 +291,73 @@ import axios from 'axios';
                 
               }
             ).then(function(res){
-            var div = document.getElementById("i");
-            var i=res.data["Erros"].length;
-            div.textContent  = res.data["Erros"][i-1]["exitosa"];
+              var div = document.getElementById("i");
+              var i=res.data["Erros"].length;
+              div.textContent  = res.data["Erros"][i-1]["exitosa"];
 
            if(res.data["Erros"][i-1]["exitosa"]== "El Archivo csv ha sido procesado con exito!!!"){
-            $( "#archi" ).removeClass( "rojo" )
-            $( "#archi" ).removeClass( "normal" )
-            $( "#archi" ).addClass( "verde" )
-            $( "#i" ).removeClass( "alert alert-danger" )
-            $( "#i" ).removeClass( "alert alert-secondary" ).addClass( "alert alert-success" )
-            $('#enviar').attr("disabled", true); 
+               div.textContent  = "";
+              $( "#archi" ).removeClass( "rojo" )
+              $( "#archi" ).removeClass( "normal" )
+              $('#exampleModalCenter').modal('show');
+              $( "#i" ).removeClass( "alert alert-danger" )
+              $( "#i" ).removeClass( "alert alert-secondary" ).addClass( "alert alert-secondary" )
+              $('#enviar').attr("disabled", true); 
            }else
            {
-
-            $( "#archi" ).removeClass( "normal" ).addClass( "rojo" )
             $( "#i" ).removeClass( "alert alert-secondary" ).addClass( "alert alert-danger" )
+
            }
            if(res.data["Erros"][i-1]["exitosa"]== "Error a procesar el archivo. Por favor revise el pdf LISTA_ERRORES para conocer los errores del archivo ingresado al sistema")
           {
-            var doc = new jsPDF("l", "mm", "a4");
-            doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(12);
-            doc.setProperties({
-              title: "Lista de errores",
-              subject: "Reporte",
-              author: "UC Ranking",
-              date: new Date()
-            });
-            let y = 30
-            let index = 0
-            doc.text(140, 20, "Lista de errores");
-            res.data["Erros"].forEach(() => {
-              if(index !==  res.data["Erros"].length - 1) {
-                doc.text(20, y, res.data["Erros"][index]["error"]);
-                y += 10
-                index += 1
-              }
-            })
+              var doc = new jsPDF("l", "mm", "a4");
+              doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(12);
+              doc.setProperties({
+                title: "Lista de errores",
+                subject: "Reporte",
+                author: "UC Ranking",
+                date: new Date()
+              });
+              let y = 30
+              let index = 0
+              doc.text(140, 20, "Lista de errores");
+              res.data["Erros"].forEach(() => {
+                if(index !==  res.data["Erros"].length - 1) {
+                  doc.text(20, y, res.data["Erros"][index]["error"]);
+                  y += 10
+                  index += 1
+                }
+              })
 
-            doc.addPage();
-            doc.text(140, 20, "Sugerencias");
-            doc.text(20, 40, "la columna Cedula solo puede contener valores numericos");
-            doc.text(20, 50, "las columnas primer_nombre,segundo_nombre,primer_apellido,area de invetigacion, titulo, y segundo_apellido   solo puede  ");
-            doc.text(20, 60, "contener valores Alfabeticos");
-            doc.text(20, 70, "la columna sexo solo puede contener los valores F (Femenino) o M (Masculino)");
-            doc.text(20, 80, "la los campos de la columna correo solo debe tener el formato @example.com o @uc.edu.ve");
-          
-            doc.text(20, 90, "la columna nacionalidad solo puede contener los valores V (Venezolano) o E (Extranjero)");
-            doc.text(20, 100, "la columna tipo solo puede contener los valores Normal, Contratado o Investigador");
-            doc.text(20, 110, "la columna area de invetigacion solo puede contener los valores Normal, Contratado o Investigador");
-            doc.text(20, 120, "la columna tipo solo puede contener los valores Normal, Contratado o Investigador");
-            doc.text(20, 130,"la columna Nivel solo puede contener los valores Pregrado, Postgrado, Maestia, Doctodado");
-            doc.text(20, 140,"la columna escalafon solo puede contener los valores Instructor ,Asistente, Agregado,Asociado,Titular");
-            doc.text(20, 150,"la columna escalafon solo puede contener los valores Faces, Facyt, Face, Fcs, Odontologia,Fcjp y Ingieneria");
-              //Info for verification
-          
-            doc.setFont("helvetica");
-            doc.setFontType("bold");
-            doc.setFontSize(16);
+              doc.addPage();
+              doc.text(140, 20, "Sugerencias");
+              doc.text(20, 40, "La columna Cedula solo puede contener valores numericos");
+              doc.text(20, 50, "Las columnas primer_nombre,segundo_nombre,primer_apellido,area de invetigacion, titulo, y segundo_apellido   solo puede  ");
+              doc.text(20, 60, "contener valores Alfabeticos");
+              doc.text(20, 70, "La columna sexo solo puede contener los valores F (Femenino) o M (Masculino)");
+              doc.text(20, 80, "La columna correo solo debe vontener valores con el formato @example.com o @uc.edu.ve");
             
+              doc.text(20, 90, "La columna nacionalidad solo puede contener los valores V (Venezolano) o E (Extranjero)");
+              doc.text(20, 100, "La columna tipo solo puede contener los valores Normal, Contratado o Investigador");
+              doc.text(20, 110, "La columna area de invetigacion solo puede contener los valores Normal, Contratado o Investigador");
+              doc.text(20, 120, "La columna tipo solo puede contener los valores Normal, Contratado o Investigador");
+              doc.text(20, 130,"La columna Nivel solo puede contener los valores Pregrado, Postgrado, Maestia, Doctodado");
+              doc.text(20, 140,"La columna escalafon solo puede contener los valores Instructor ,Asistente, Agregado,Asociado,Titular");
+              doc.text(20, 150,"La columna escalafon solo puede contener los valores Faces, Facyt, Face, Fcs, Odontologia,Fcjp y Ingieneria");
+                //Info for verification
+            
+              doc.setFont("helvetica");
+              doc.setFontType("bold");
+              doc.setFontSize(16);
+              
 
-            doc.save("LISTA_ERRORES" + ".pdf");
-             
-          }
+              doc.save("LISTA_ERRORES" + ".pdf");
+
+              $( "#enviar" ).removeClass( "btn btn-primaryt" ).addClass( "btn btn-light" )
+
+            }
 
          
           console.log(res.data["Erros"][i-1]["exitosa"]); 
@@ -392,7 +431,7 @@ import axios from 'axios';
             $(fechaAOdontologia).val(res.data["Odontologia"])
             $(fechaAFcjp).val(res.data["Fcjp"])
             $(fechaAIngieneria).val(res.data["Ingieneria"])
-               
+            $(API).val(res.data["APi"])   
             console.log(res.data); 
             console.log('SUCCESS!!');
            
@@ -402,6 +441,10 @@ import axios from 'axios';
           console.log('FAILURE!!');
           });
 
+
+      },CambiarBoton(){
+          
+          $( "#enviar" ).removeClass( "btn btn-light" ).addClass( "btn btn-primary" )
 
       },
       /*
@@ -418,6 +461,10 @@ import axios from 'axios';
 #centar{
           display:block;margin:auto;
            margin-bottom:20px; margin-top:20px;
+        }
+#centar2{
+          display:block;margin:auto;
+           margin-bottom:20px; margin-top:-10px;
         }
   .archivo{
           
@@ -461,7 +508,7 @@ import axios from 'axios';
         }
     h2{
       margin-top:10px;
-      margin-bottom:40px;
+      margin-bottom:20px;
       text-align: center;
       opacity :0.5;
         }
@@ -483,6 +530,11 @@ import axios from 'axios';
              width:110%;
               margin-left:-90px;
         
+        }
+
+        label{
+            text-align:center;
+           
         }
 @media (max-width: 1000px) { 
 
@@ -529,10 +581,9 @@ import axios from 'axios';
           margin-bottom:8%;
         }
   #boton{
-            display:bloack;
-          
-          width: 180px;
-          margin:auto;
+          display:bloack;
+           margin:auto;
+
        
         }
 
@@ -551,6 +602,10 @@ import axios from 'axios';
     margin-left:100px;
      margin-bottom:80px;
 }
+
+.form-group{
+    margin-top:-10px;
+}
 </style>    
-</style>
+
 
