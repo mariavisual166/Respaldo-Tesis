@@ -81,11 +81,14 @@ CREATE TABLE FechaTope(
 	Facultad varchar(50) ,
 	Fecha timestamp,
 		PRIMARY KEY (Facultad));
+CREATE TABLE FechaAPi(
+	Fecha timestamp
+		);
 CREATE TABLE CorreoEnviado(
 	Facultad varchar(50) ,
 	Logico varchar(50),
 		PRIMARY KEY (Facultad));
-
+INSERT INTO FechaAPi(Fecha) VALUES ('2019-01-01 00:00:00');
 INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Facyt','2210-10-01 00:00:00');
 INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Faces','2210-10-01 00:00:00');
 INSERT INTO FechaTope(Facultad,Fecha) VALUES ('Face','2210-10-01 00:00:00');
